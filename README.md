@@ -8,7 +8,7 @@ convert sensor_msgs::msg::Image or sensor_msgs::msg::CompressedImage in rosbag2 
 mkdir -p <your workspace>/src
 cd <your workspace>/src
 git clone https://github.com/wep21/bag2_to_image.git
-cd ../../
+cd ..
 rosdep install --from-paths src --ignore-src -y
 colcon build
 source install/setup.bash
