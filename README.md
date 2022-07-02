@@ -1,5 +1,7 @@
 # bag2_to_image
 
+[![Build and test](https://github.com/wep21/bag2_to_image/actions/workflows/test.yaml/badge.svg?branch=main)](https://github.com/wep21/bag2_to_image/actions/workflows/test.yaml)
+
 convert sensor_msgs::msg::Image or sensor_msgs::msg::CompressedImage in rosbag2 to .jpeg files.
 
 ## Usage
