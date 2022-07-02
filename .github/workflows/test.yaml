@@ -32,7 +32,7 @@ jobs:
         with:
           package-name: bag2_to_image
           target-ros2-distro: ${{ matrix.ros }}
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v3
         with:
           name: colcon-logs
           path: ros_ws/log
