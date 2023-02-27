@@ -28,7 +28,7 @@ jobs:
     steps:
       - name: Build and run tests
         id: action-ros-ci
-        uses: ros-tooling/action-ros-ci@v0.2
+        uses: ros-tooling/action-ros-ci@v0.3
         with:
           package-name: bag2_to_image
           target-ros2-distro: ${{ matrix.ros }}
