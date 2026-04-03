@@ -14,9 +14,15 @@
 
 #include "bag2_to_image/bag2_to_image.hpp"
 
+#include "rclcpp/version.h"
 #include "rosbag2_cpp/converter_interfaces/serialization_format_converter.hpp"
 #include "rosbag2_cpp/converter_options.hpp"
+#if RCLCPP_VERSION_GTE(25, 0, 0)
+#include "rclcpp/typesupport_helpers.hpp"
+#else
+// Humble
 #include "rosbag2_cpp/typesupport_helpers.hpp"
+#endif
 #include "rosbag2_storage/storage_options.hpp"
 
 #include <opencv2/opencv.hpp>
@@ -120,9 +126,17 @@ Bag2ToImageNode::Bag2ToImageNode(const rclcpp::NodeOptions & options)
     if (result->type == "sensor_msgs/msg/Image") {
       auto image = std::make_unique<sensor_msgs::msg::Image>();
       ros_message->message = image.get();
+#if RCLCPP_VERSION_GTE(25, 0, 0)
+      auto library = rclcpp::get_typesupport_library(result->type, "rosidl_typesupport_cpp");
+      if (!library) throw std::runtime_error("Missing rosidl_typesupport_cpp library");
+      auto type_support =
+        rclcpp::get_message_typesupport_handle(result->type, "rosidl_typesupport_cpp", *library);
+#else
+      // Humble
       auto library = rosbag2_cpp::get_typesupport_library(result->type, "rosidl_typesupport_cpp");
       auto type_support =
         rosbag2_cpp::get_typesupport_handle(result->type, "rosidl_typesupport_cpp", library);
+#endif
       deserializer_->deserialize(serialized_message, type_support, ros_message);
       const cv::Mat mat{
         static_cast<int>(image->height), static_cast<int>(image->width),
@@ -135,9 +149,17 @@ Bag2ToImageNode::Bag2ToImageNode(const rclcpp::NodeOptions & options)
     } else if (result->type == "sensor_msgs/msg/CompressedImage") {
       auto image = std::make_unique<sensor_msgs::msg::CompressedImage>();
       ros_message->message = image.get();
+#if RCLCPP_VERSION_GTE(25, 0, 0)
+      auto library = rclcpp::get_typesupport_library(result->type, "rosidl_typesupport_cpp");
+      if (!library) throw std::runtime_error("Missing rosidl_typesupport_cpp library");
+      auto type_support =
+        rclcpp::get_message_typesupport_handle(result->type, "rosidl_typesupport_cpp", *library);
+#else
+      // Humble
       auto library = rosbag2_cpp::get_typesupport_library(result->type, "rosidl_typesupport_cpp");
       auto type_support =
         rosbag2_cpp::get_typesupport_handle(result->type, "rosidl_typesupport_cpp", library);
+#endif
       deserializer_->deserialize(serialized_message, type_support, ros_message);
       try {
         auto mat = cv::imdecode(cv::Mat(image->data), imdecode_flag_);
