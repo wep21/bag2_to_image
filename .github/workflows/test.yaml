@@ -10,29 +10,27 @@ on:
     - cron: "0 * * * *"
 
 jobs:
-  build_and_test:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - ros: humble
-            ubuntu: jammy
-          - ros: rolling
-            ubuntu: jammy
-
+  build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rosdistro: [humble, jazzy, kilted, rolling]
+      fail-fast: false
     container:
-      image: rostooling/setup-ros-docker:ubuntu-${{ matrix.ubuntu }}-latest
-
-    name: ROS 2 ${{ matrix.ros }}
+      image: ghcr.io/sloretz/ros:${{ matrix.rosdistro }}-ros-base
     steps:
-      - name: Build and run tests
-        id: action-ros-ci
-        uses: ros-tooling/action-ros-ci@v0.3
+      - name: Build Environment
+        uses: ros-tooling/setup-ros@v0.7
+        with:
+          required-ros-distributions: ${{ matrix.rosdistro }}
+      - name: Run Tests
+        uses: ros-tooling/action-ros-ci@0.4.5
         with:
           package-name: bag2_to_image
-          target-ros2-distro: ${{ matrix.ros }}
-      - uses: actions/upload-artifact@v4
+          target-ros2-distro: ${{ matrix.rosdistro }}
+      - name: Upload logs
+        uses: actions/upload-artifact@v4
         with:
-          name: colcon-logs
+          name: colcon-logs-${{ matrix.rosdistro }}
           path: ros_ws/log
+        if: always()
