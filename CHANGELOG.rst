@@ -2,8 +2,8 @@
 Changelog for package bag2_to_image
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.1 (2026-04-03)
+------------------
 * fix: modify compile error in Jazzy (`#5 <https://github.com/wep21/bag2_to_image/issues/5>`_)
 * ci: update actions (`#6 <https://github.com/wep21/bag2_to_image/issues/6>`_)
 * build(deps): Bump actions/upload-artifact from 3 to 4 (`#3 <https://github.com/wep21/bag2_to_image/issues/3>`_)
