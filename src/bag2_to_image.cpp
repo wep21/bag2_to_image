@@ -162,7 +162,8 @@ Bag2ToImageNode::Bag2ToImageNode(const rclcpp::NodeOptions & options)
 #endif
       deserializer_->deserialize(serialized_message, type_support, ros_message);
       try {
-        auto mat = cv::imdecode(cv::Mat(image->data), imdecode_flag_);
+        auto mat =
+          cv::imdecode(cv::Mat(static_cast<std::vector<uint8_t> &>(image->data)), imdecode_flag_);
 
         const size_t split_pos = image->format.find(';');
         std::string image_encoding = image->format.substr(0, split_pos);
