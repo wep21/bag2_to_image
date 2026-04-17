@@ -2,8 +2,8 @@
 Changelog for package bag2_to_image
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.2 (2026-04-17)
+------------------
 * build(deps): Bump actions/upload-artifact from 4 to 7 (`#7 <https://github.com/wep21/bag2_to_image/issues/7>`_)
 * fix: modify compile error caused by rosidl_buffer introduction (`#8 <https://github.com/wep21/bag2_to_image/issues/8>`_)
 * Contributors: Michal Sojka, dependabot[bot]
