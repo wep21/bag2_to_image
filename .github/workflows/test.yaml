@@ -24,7 +24,7 @@ jobs:
         with:
           required-ros-distributions: ${{ matrix.rosdistro }}
       - name: Run Tests
-        uses: ros-tooling/action-ros-ci@0.4.5
+        uses: ros-tooling/action-ros-ci@0.4.6
         with:
           package-name: bag2_to_image
           target-ros2-distro: ${{ matrix.rosdistro }}
